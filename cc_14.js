@@ -25,3 +25,28 @@ function createTicket(name, issue, priority) {
 createTicket("Casey", "Bad at coding", "High");
 createTicket("Albert", "Wants refund", "Medium");
 createTicket("Elise", "Issue with product", "Low");
+
+// Task 3: Converting NodeLists to Arrays for Bulk Updates
+
+// Selecting all items with the supportTicket class and turning them into an array
+const ticketSelector = document.querySelectorAll(".supportTicket");
+const ticketSelectorArray = Array.from(ticketSelector);
+
+// Selecting each individual ticket, and applying basic styles and styles based on the priority 
+ticketSelectorArray.forEach((ticket) => {
+
+    ticket.style.padding = `10px`;
+    ticket.style.margin = '10px';
+    ticket.style.borderRadius = '5px';
+    ticket.style.display ='inline-block';
+
+// For the current ticket we are selecting the text inside the label tag to perform if statements
+    const ticketPriority = ticket.querySelector("label").textContent;
+
+    if (ticketPriority.includes("High")) {
+    ticket.style.backgroundColor = 'red';
+    }
+    else {
+        ticket.style.backgroundColor = 'lightblue'; // if its not high priority, the color will be blue
+    }
+});
