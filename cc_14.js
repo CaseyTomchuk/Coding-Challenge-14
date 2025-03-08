@@ -16,6 +16,12 @@ function createTicket(name, issue, priority) {
     const resolveButton = document.createElement("button"); 
     resolveButton.textContent = "Resolve";
 
+// (Task 4) When clicking the resolve button we remove newTicket from container
+    resolveButton.addEventListener("click", function(click) {
+        click.stopPropagation();
+        ticketContainer.removeChild(newTicket);
+    });
+
 // Adding the button to newTicket
     newTicket.appendChild(resolveButton);
 // Adding new ticket to the ticketContainer div
@@ -49,4 +55,10 @@ ticketSelectorArray.forEach((ticket) => {
     else {
         ticket.style.backgroundColor = 'lightblue'; // if its not high priority, the color will be blue
     }
+});
+
+// Task 4:
+
+ticketContainer.addEventListener("click", function(click) {
+    console.log("Ticket Clicked");
 });
