@@ -7,12 +7,22 @@ function createTicket(name, issue, priority) {
     const newTicket = document.createElement("div");
     newTicket.setAttribute("class", "supportTicket"); // setting the class to supportTicket
 
-    newTicket.innerHTML = 
-    `<h3>Customer Name: ${name}</h3>
-    <p> Issue Description: ${issue}</p>
-    <label> Priority Level: ${priority} </label>`;
+  // Declaring variables based on parameters and appending them to newTicket
+    const customerName = document.createElement("h3");
+    customerName.textContent = `Customer Name: ${name}`;
+    newTicket.appendChild(customerName);
 
-// done this way so I don't have to use querySelector and initalize a new variable when writing the removeChild function
+    const issueDsc = document.createElement("p");
+    issueDsc.textContent = `Issue Description: ${issue}`;
+    newTicket.appendChild(issueDsc);
+
+    const priorityLevel = document.createElement("label");
+    priorityLevel.textContent = `Priority Level: ${priority}`;
+    newTicket.appendChild(priorityLevel);
+
+    const blank = document.createElement("div");
+        newTicket.appendChild(blank); // white space
+
     const resolveButton = document.createElement("button"); 
     resolveButton.textContent = "Resolve";
 
@@ -22,8 +32,48 @@ function createTicket(name, issue, priority) {
         ticketContainer.removeChild(newTicket);
     });
 
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+
+// (TASK 5)
+    editButton.addEventListener("click", function(edit) {
+        edit.stopPropagation();
+
+// Creating Input Fields
+        const inputField = document.createElement("input");
+        inputField.value = customerName.textContent;
+        newTicket.appendChild(inputField);
+
+        const inputField2 = document.createElement("input");
+        inputField2.value = issueDsc.textContent;
+        newTicket.appendChild(inputField2);
+
+        const inputField3 = document.createElement("input");
+        inputField3.value = priorityLevel.textContent;
+        newTicket.appendChild(inputField3);
+
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+
+// On clicking save we set text content to the input field values, and delete any trace of the input field or save button
+        saveButton.addEventListener("click", function(save) {
+            save.stopPropagation();
+            customerName.textContent = inputField.value;
+            issueDsc.textContent = inputField2.value;
+            priorityLevel.textContent = inputField3.value;
+
+            newTicket.removeChild(saveButton);
+            newTicket.removeChild(inputField);
+            newTicket.removeChild(inputField2);
+            newTicket.removeChild(inputField3);
+    })
+    newTicket.appendChild(saveButton);
+})
+
 // Adding the button to newTicket
     newTicket.appendChild(resolveButton);
+// Adding the edit button to newTicket
+    newTicket.appendChild(editButton);
 // Adding new ticket to the ticketContainer div
     ticketContainer.appendChild(newTicket); 
 };
@@ -59,6 +109,6 @@ ticketSelectorArray.forEach((ticket) => {
 
 // Task 4:
 
-ticketContainer.addEventListener("click", function(click) {
+ticketContainer.addEventListener("click", function() {
     console.log("Ticket Clicked");
 });
